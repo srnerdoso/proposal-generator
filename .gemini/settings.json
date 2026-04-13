@@ -1,0 +1,11 @@
+{
+  "experimental": {
+    "enableAgents": true
+  },
+  "context": {
+    "fileName": ["CONTEXT.md"]
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  }
+}
