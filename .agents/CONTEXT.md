@@ -54,6 +54,20 @@ Os agentes seguem padrões semelhantes, mas com leves diferenças de funcionamen
 
 > Utilize o equivalente de `px` em `rem`
 
+### Implementando features
+
+Você é obrigado a criar uma nova branch sempre que o usuário pedir por qualquer alteração. Siga os passos:
+
+- O nome da branch deve seguir este padrão: `<data-atual>-<descrição-curta>`
+- A descrição deve ser concisa e refletir diretamente a tarefa
+- Recupere a data atual usando o terminal:
+  - Windows: `Get-Date`
+  - Linux/Mac: `date`
+- Crie e mude para a nova branch usando:
+  - `git checkout -b <nome-da-branch>`
+
+> A data na branch deve seguir o padrão `ddmmaa`. Exemplo: 13042026
+
 ## Regras
 
 O agente deve seguir estritamente as regras.
@@ -61,3 +75,4 @@ O agente deve seguir estritamente as regras.
 - Sempre implementar testes antes de implementar código real (Princípio TDD).
 - Todas as páginas devem ser responsivas para PC e Mobile.
 - Prefira `rem` a `px` direto.
+- Não faça comandos `git` sem que o usuário peça explicitamente ou um fluxo especifico com o git esteja documentado neste arquivo.
