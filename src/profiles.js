@@ -1,0 +1,27 @@
+export const profiles = [
+  {
+    name: "Dev",
+    role: "Programador Full Stack",
+    freelancer: "Valdenor",
+    skills: [
+      "Java 17+",
+      "Spring Boot 3+",
+      "Docker",
+      "JavaScript ES6+",
+      "React JS",
+      "Next JS",
+      "Tailwind CSS",
+      "HTML5",
+      "CSS3",
+      "Git",
+      "GitHub",
+      "JWT",
+      "MySQL",
+      "PostgreSQL",
+      "H2",
+      "JUnit",
+      "Mockito",
+      "Linux",
+    ],
+  },
+];
