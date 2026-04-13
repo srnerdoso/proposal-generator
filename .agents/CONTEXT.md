@@ -33,7 +33,7 @@ Para otimização de proposta:
 
 ## Libs
 
-- Jest
+- Vitest
 - better-sqlite3
 
 ## Limitações
