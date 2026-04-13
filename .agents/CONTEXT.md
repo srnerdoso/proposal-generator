@@ -39,6 +39,7 @@ Para otimização de proposta:
 ## Limitações
 
 - O sistema suporta apenas Gemini CLI atualmente.
+- `tsconfig.json` é apenas leitura.
 
 ## Acoplamento de Agentes CLI
 
@@ -77,3 +78,4 @@ O agente deve seguir estritamente as regras.
 - Todas as páginas devem ser responsivas para PC e Mobile.
 - Prefira `rem` a `px` direto.
 - Não faça comandos `git` sem que o usuário peça explicitamente ou um fluxo especifico com o git esteja documentado neste arquivo.
+- Não editar `tsconfig.json` ou qualquer outro arquivo de configuração sem ordem explicita do usuário.
