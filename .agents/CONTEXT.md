@@ -34,6 +34,7 @@ Para otimização de proposta:
 ## Libs
 
 - Jest
+- better-sqlite3
 
 ## Limitações
 
