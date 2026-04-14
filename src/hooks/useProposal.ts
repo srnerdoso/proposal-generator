@@ -1,44 +1,68 @@
-// FIXME: Otimizar prompts. Manter em um prompt único para evitar propostas muito extensas. Deve divir apenas para analisar cada sessão. Após isso todas as analises devem ser unidas para um agente analisar e gerar uma proposta otimizada com base nas analises.
-
 import type { AsyncProposalGenerator } from "@/generators/types.ts";
-import type { Profile } from "@/profiles.ts";
-import { proposals, type Proposal } from "@/proposals.ts";
+import type { Profile } from "@/constants/profiles.ts";
+import { proposals, type Proposal } from "@/constants/proposals.ts";
+import {
+  analyzeOffer,
+  analyzeProfile,
+  analyzeProject,
+  generateFinalProposal,
+} from "@/constants/prompts.ts";
 
-function generatePresentation(
-  request: AsyncProposalGenerator,
-  profile: Profile,
-) {
-  const profileStr = JSON.stringify(profile);
-  console.log("Perfil a gerar:");
-  console.log(profileStr);
+type AnalyseProps = {
+  request: AsyncProposalGenerator;
+  profile: Profile;
+  proposal: Proposal;
+};
 
-  const prompt =
-    "Gere um apresentação de proposta de freelance profissional com base nos seguintes dados:\n" +
-    profileStr;
+function generatePresentationAnalysis({
+  request,
+  profile,
+  proposal,
+}: AnalyseProps) {
+  console.log("Perfil a analisar:");
+  console.log(JSON.stringify(profile));
+  const prompt = analyzeProfile({ profile, proposal });
   return request(prompt);
 }
 
-function generateSpecification(
-  request: AsyncProposalGenerator,
-  proposals: Proposal,
-) {
-  const proposalStr = JSON.stringify(proposals);
-  console.log("Proposta a gerar:");
-  console.log(proposalStr);
+function generateSpecificationAnalysis({
+  request,
+  profile,
+  proposal,
+}: AnalyseProps) {
+  console.log("Proposta a analisar:");
+  console.log(JSON.stringify(proposal));
 
-  const prompt =
-    "Gere uma especificação de serviço com base nos seguintes dados:\n" +
-    proposalStr;
+  const prompt = analyzeProject({ profile, proposal });
   return request(prompt);
 }
 
-function generateOffer(request: AsyncProposalGenerator, proposals: Proposal) {
-  const proposalStr = JSON.stringify(proposals);
+function generateOfferAnalysis({ request, profile, proposal }: AnalyseProps) {
   console.log("Proposta a gerar:");
-  console.log(proposalStr);
+  console.log(JSON.stringify(proposal));
 
-  const prompt =
-    "Gere uma oferta de serviço com base nos seguintes dados:\n" + proposalStr;
+  const prompt = analyzeOffer({ profile, proposal });
+  return request(prompt);
+}
+
+function generateProposal({
+  offerAnalysis,
+  projectAnalysis,
+  profileAnalysis,
+  request,
+}: {
+  profileAnalysis: string;
+  projectAnalysis: string;
+  offerAnalysis: string;
+  request: AsyncProposalGenerator;
+}) {
+  console.log("Gerando proposta final...");
+
+  const prompt = generateFinalProposal({
+    profileAnalysis,
+    offerAnalysis,
+    projectAnalysis,
+  });
   return request(prompt);
 }
 
@@ -54,27 +78,41 @@ export async function useProposal(
 ) {
   const proposal = proposals[0]!!;
 
+  const analysisParams = {
+    request,
+    profile,
+    proposal,
+  };
+
   console.log("Gerando apresentação...");
-  const presentation = await generatePresentation(request, profile);
+  const presentation = await generatePresentationAnalysis(analysisParams);
   console.log("Apresentação gerada com sucesso! Detalhes abaixo:");
   console.log(presentation);
 
   console.log("Gerando especificação...");
-  const specification = await generateSpecification(request, proposal);
+  const specification = await generateSpecificationAnalysis(analysisParams);
   console.log("Especificação gerada com sucesso! Detalhes abaixo:");
   console.log(specification);
 
   console.log("Gerando oferta...");
-  const offer = await generateOffer(request, proposal);
+  const offer = await generateOfferAnalysis(analysisParams);
   console.log("Oferta gerada com sucesso! Detalhes abaixo:");
   console.log(offer);
+
+  console.log("Gerando proposta final...");
+  const finalProposal = await generateProposal({
+    profileAnalysis: presentation,
+    projectAnalysis: specification,
+    offerAnalysis: offer,
+    request,
+  });
+  console.log("Proposta gerada com sucesso! Detalhes abaixo:");
+  console.log(finalProposal);
 
   const file = normalizeFileName(proposal.customer);
 
   return {
     file,
-    presentation,
-    specification,
-    offer,
+    content: finalProposal,
   };
 }

@@ -1,4 +1,4 @@
-import { profiles, type Profile } from "@/profiles.ts";
+import { profiles, type Profile } from "@/constants/profiles.ts";
 
 export function getProfileByName(name: string): Profile {
   if (!profiles || profiles.length === 0) {

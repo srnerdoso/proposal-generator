@@ -25,21 +25,11 @@ async function exec() {
   const proposal = await generate();
 
   if (proposal) {
-    console.log("Propostas geradas com sucesso!");
-    console.log("Detalhes da proposta:");
-    console.log(proposal);
-
-    const finalProposal = `${proposal.presentation}
-
-${proposal.specification}
-
-${proposal.offer}`;
-
     console.log("Salvando propostas...");
 
     const dir = path.join(process.cwd(), "proposals");
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, proposal.file), finalProposal, "utf-8");
+    fs.writeFileSync(path.join(dir, proposal.file), proposal.content, "utf-8");
 
     console.log("Propostas salvas com sucesso!");
     console.log("Arquivo salvo em: " + "./proposals/" + proposal.file);
