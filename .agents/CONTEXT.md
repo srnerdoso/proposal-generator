@@ -2,6 +2,12 @@
 
 Este é um projeto de uso local que auxilia na geração de propostas otimizadas para Freelaces.
 
+## Arquitetura e padrões
+
+- Arquitetura Modular
+- Padrão Strategy
+- Padrão Factory
+
 ## Geração
 
 A geração é feita com auxilio de IAs CLI como Gemini CLI, Claude Code, Codex etc, porém, com orquestramento via código.

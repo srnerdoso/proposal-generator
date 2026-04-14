@@ -1,0 +1,20 @@
+{
+  "name": "proposal-generator",
+  "version": "1.0.0",
+  "description": "Um gerador de propostas para freelas",
+  "scripts": {
+    "gen": "tsx src/main.ts"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "valdenor.filhov@gmail.com",
+  "license": "MIT",
+  "packageManager": "pnpm@10.6.5",
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@types/node": "^25.6.0"
+  }
+}

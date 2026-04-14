@@ -1,0 +1,59 @@
+// FIXME: Otimizar prompts. Manter em um prompt único para evitar propostas muito extensas. Deve divir apenas para analisar cada sessão. Após isso todas as analises devem ser unidas para um agente analisar e gerar uma proposta otimizada com base nas analises.
+
+import type { AsyncProposalGenerator } from "@/generators/types.ts";
+import type { Profile } from "@/profiles.ts";
+import { proposals, type Proposal } from "@/proposals.ts";
+
+function generatePresentation(
+  request: AsyncProposalGenerator,
+  profile: Profile,
+) {
+  const prompt =
+    "Gere um apresentação de proposta de freelance profissional com base nos seguintes dados:\n" +
+    profile;
+  return request(prompt);
+}
+
+function generateSpecification(
+  request: AsyncProposalGenerator,
+  proposals: Proposal,
+) {
+  const prompt =
+    "Gere uma especificação de serviço com base nos seguintes dados:\n" +
+    proposals;
+  return request(prompt);
+}
+
+function generateOffer(request: AsyncProposalGenerator, proposals: Proposal) {
+  const prompt =
+    "Gere uma oferta de serviço com base nos seguintes dados:\n" + proposals;
+  return request(prompt);
+}
+
+export async function useProposal(
+  request: AsyncProposalGenerator,
+  profile: Profile,
+) {
+  const proposal = proposals[0]!!;
+
+  console.log("Gerando apresentação...");
+  const presentation = await generatePresentation(request, profile);
+  console.log("Apresentação gerada com sucesso! Detalhes abaixo:");
+  console.log(presentation);
+
+  console.log("Gerando especificação...");
+  const specification = await generateSpecification(request, proposal);
+  console.log("Especificação gerada com sucesso! Detalhes abaixo:");
+  console.log(specification);
+
+  console.log("Gerando oferta...");
+  const offer = await generateOffer(request, proposal);
+  console.log("Oferta gerada com sucesso! Detalhes abaixo:");
+  console.log(offer);
+
+  return {
+    presentation,
+    specification,
+    offer,
+  };
+}
