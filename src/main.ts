@@ -3,6 +3,7 @@ import fs from "fs";
 import { generateWithApi } from "./generators/api-based/index.ts";
 import { generateWithCli } from "./generators/cli-based/index.ts";
 import { settings } from "./settings.ts";
+import path from "path";
 
 async function exec() {
   console.log("Gerando propostas...");
@@ -35,7 +36,11 @@ ${proposal.specification}
 ${proposal.offer}`;
 
     console.log("Salvando propostas...");
-    fs.writeFileSync("./proposals/" + proposal.file, finalProposal, "utf-8");
+
+    const dir = path.join(process.cwd(), "proposals");
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, proposal.file), finalProposal, "utf-8");
+
     console.log("Propostas salvas com sucesso!");
     console.log("Arquivo salvo em: " + "./proposals/" + proposal.file);
   } else {

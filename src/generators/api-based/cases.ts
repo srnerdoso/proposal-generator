@@ -28,8 +28,11 @@ export function apiUseCases({
     },
 
     google: async function (prompt: string): Promise<string> {
-      const googleAi = new GoogleGenAI({ apiKey });
+      if (!apiKey) {
+        throw new Error("API key is not defined.");
+      }
 
+      const googleAi = new GoogleGenAI({ apiKey });
       const response = await googleAi.models.generateContent({
         model,
         contents: prompt,

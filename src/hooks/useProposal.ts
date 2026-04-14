@@ -8,9 +8,13 @@ function generatePresentation(
   request: AsyncProposalGenerator,
   profile: Profile,
 ) {
+  const profileStr = JSON.stringify(profile);
+  console.log("Perfil a gerar:");
+  console.log(profileStr);
+
   const prompt =
     "Gere um apresentação de proposta de freelance profissional com base nos seguintes dados:\n" +
-    JSON.stringify(profile);
+    profileStr;
   return request(prompt);
 }
 
@@ -18,16 +22,23 @@ function generateSpecification(
   request: AsyncProposalGenerator,
   proposals: Proposal,
 ) {
+  const proposalStr = JSON.stringify(proposals);
+  console.log("Proposta a gerar:");
+  console.log(proposalStr);
+
   const prompt =
     "Gere uma especificação de serviço com base nos seguintes dados:\n" +
-    JSON.stringify(proposals);
+    proposalStr;
   return request(prompt);
 }
 
 function generateOffer(request: AsyncProposalGenerator, proposals: Proposal) {
+  const proposalStr = JSON.stringify(proposals);
+  console.log("Proposta a gerar:");
+  console.log(proposalStr);
+
   const prompt =
-    "Gere uma oferta de serviço com base nos seguintes dados:\n" +
-    JSON.stringify(proposals);
+    "Gere uma oferta de serviço com base nos seguintes dados:\n" + proposalStr;
   return request(prompt);
 }
 
