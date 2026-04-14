@@ -10,7 +10,7 @@ function generatePresentation(
 ) {
   const prompt =
     "Gere um apresentação de proposta de freelance profissional com base nos seguintes dados:\n" +
-    profile;
+    JSON.stringify(profile);
   return request(prompt);
 }
 
@@ -20,14 +20,21 @@ function generateSpecification(
 ) {
   const prompt =
     "Gere uma especificação de serviço com base nos seguintes dados:\n" +
-    proposals;
+    JSON.stringify(proposals);
   return request(prompt);
 }
 
 function generateOffer(request: AsyncProposalGenerator, proposals: Proposal) {
   const prompt =
-    "Gere uma oferta de serviço com base nos seguintes dados:\n" + proposals;
+    "Gere uma oferta de serviço com base nos seguintes dados:\n" +
+    JSON.stringify(proposals);
   return request(prompt);
+}
+
+function normalizeFileName(customer: string) {
+  const date = new Date().toISOString().slice(2, 10).replace(/-/g, "");
+  const customerNormalized = customer.replace(/\s/g, "_");
+  return ("proposal_" + date + "_" + customerNormalized).toUpperCase() + ".md";
 }
 
 export async function useProposal(
@@ -51,7 +58,10 @@ export async function useProposal(
   console.log("Oferta gerada com sucesso! Detalhes abaixo:");
   console.log(offer);
 
+  const file = normalizeFileName(proposal.customer);
+
   return {
+    file,
     presentation,
     specification,
     offer,

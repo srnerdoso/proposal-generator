@@ -1,7 +1,7 @@
+import fs from "fs";
 import { generateWithApi } from "./generators/api-based/index.ts";
 import { generateWithCli } from "./generators/cli-based/index.ts";
 import { settings } from "./settings.ts";
-import fs from "fs";
 
 async function exec() {
   console.log("Gerando propostas...");
@@ -27,15 +27,16 @@ async function exec() {
     console.log("Detalhes da proposta:");
     console.log(proposal);
 
-    const finalProposal = `${proposal.presentation}\n\n${proposal.specification}\n\n${proposal.offer}`;
+    const finalProposal = `${proposal.presentation}
+
+${proposal.specification}
+
+${proposal.offer}`;
 
     console.log("Salvando propostas...");
-
-    fs.writeFileSync(
-      "../proposals/" + proposal + ".md",
-      finalProposal,
-      "utf-8",
-    );
+    fs.writeFileSync("./proposals/" + proposal.file, finalProposal, "utf-8");
+    console.log("Propostas salvas com sucesso!");
+    console.log("Arquivo salvo em: " + "./proposals/" + proposal.file);
   } else {
     console.error("Erro ao gerar propostas.");
   }
