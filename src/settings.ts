@@ -10,15 +10,13 @@ export type ApiBased = {
   profile: string;
 };
 
-const API_KEY = process.env.API_KEY;
-
 export const settings: CliBased | ApiBased = {
   mode: "api-based",
   api: {
     type: "google",
     // url: "http://localhost:11434/api/generate",
     model: "gemini-3-flash-preview",
-    apiKey: API_KEY,
+    apiKey: process.env.API_KEY,
   },
   profile: "Dev",
 };

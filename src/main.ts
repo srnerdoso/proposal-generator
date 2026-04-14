@@ -1,3 +1,4 @@
+import "dotenv/config";
 import fs from "fs";
 import { generateWithApi } from "./generators/api-based/index.ts";
 import { generateWithCli } from "./generators/cli-based/index.ts";
