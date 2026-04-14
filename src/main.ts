@@ -22,20 +22,26 @@ async function exec() {
     }
   }
 
-  const proposal = await generate();
+  const proposals = await generate();
 
-  if (proposal) {
-    console.log("Salvando propostas...");
+  proposals.forEach((proposal, i) => {
+    if (proposal) {
+      console.log(`Salvando propostas ${i + 1} de ${proposals.length}...`);
 
-    const dir = path.join(process.cwd(), "proposals");
-    fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, proposal.file), proposal.content, "utf-8");
+      const dir = path.join(process.cwd(), "proposals");
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(
+        path.join(dir, proposal.file),
+        proposal.content,
+        "utf-8",
+      );
 
-    console.log("Propostas salvas com sucesso!");
-    console.log("Arquivo salvo em: " + "./proposals/" + proposal.file);
-  } else {
-    console.error("Erro ao gerar propostas.");
-  }
+      console.log("Propostas salvas com sucesso!");
+      console.log("Arquivo salvo em: " + "./proposals/" + proposal.file);
+    } else {
+      console.error("Erro ao gerar propostas.");
+    }
+  });
 }
 
 exec();

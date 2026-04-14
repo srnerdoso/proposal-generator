@@ -1,3 +1,4 @@
+// WARNING: CLI ainda não é bem suportado
 export type CliBased = { mode: "cli-based"; cli: "gemini"; profile: string };
 export type ApiBased = {
   mode: "api-based";
