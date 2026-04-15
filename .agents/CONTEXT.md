@@ -2,6 +2,12 @@
 
 Este é um projeto de uso local que auxilia na geração de propostas otimizadas para Freelaces.
 
+## Arquitetura e padrões
+
+- Arquitetura Modular
+- Padrão Strategy
+- Padrão Factory
+
 ## Geração
 
 A geração é feita com auxilio de IAs CLI como Gemini CLI, Claude Code, Codex etc, porém, com orquestramento via código.
@@ -33,11 +39,13 @@ Para otimização de proposta:
 
 ## Libs
 
-- Jest
+- Vitest
+- better-sqlite3
 
 ## Limitações
 
 - O sistema suporta apenas Gemini CLI atualmente.
+- `tsconfig.json` é apenas leitura.
 
 ## Acoplamento de Agentes CLI
 
@@ -76,3 +84,4 @@ O agente deve seguir estritamente as regras.
 - Todas as páginas devem ser responsivas para PC e Mobile.
 - Prefira `rem` a `px` direto.
 - Não faça comandos `git` sem que o usuário peça explicitamente ou um fluxo especifico com o git esteja documentado neste arquivo.
+- Não editar `tsconfig.json` ou qualquer outro arquivo de configuração sem ordem explicita do usuário.
